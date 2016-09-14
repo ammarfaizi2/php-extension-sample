@@ -2,18 +2,23 @@
 
 #define SAMPLE_NS "sample"
 
+/*
+  1. define the arguments
+
+  validate with 'php -re sample'
+
+  ZEND_BEGIN_ARG_INFO(name, _unused)
+  ZEND_BEGIN_ARG_INFO_EX(name, _unused, return_reference, required_num_args)
+*/
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_hello_name, 0)
+    ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_hello_name)
 {
-  /*
-    1. define variables for string value and length
-  */
   char *name;
   size_t name_len;
 
-  /*
-    2. parse parameters using FAST ZPP Api
-    https://wiki.php.net/rfc/fast_zpp
-   */
   ZEND_PARSE_PARAMETERS_START(1, 1)
   	Z_PARAM_STRING(name, name_len)
   ZEND_PARSE_PARAMETERS_END();
@@ -24,7 +29,10 @@ PHP_FUNCTION(sample_hello_name)
 }
 
 const zend_function_entry php_sample_functions[] = {
-  ZEND_NS_NAMED_FE(SAMPLE_NS, hello, ZEND_FN(sample_hello_name), NULL)
+  /*
+    2. provide the argument info in the function registration
+  */
+  ZEND_NS_NAMED_FE(SAMPLE_NS, hello, ZEND_FN(sample_hello_name), ArgInfo_sample_hello_name)
   PHP_FE_END
 };
 
