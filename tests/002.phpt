@@ -1,5 +1,5 @@
 --TEST--
-Call function with optional argument
+Call function with stdClass instance as argument and expect an error exception
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
@@ -11,4 +11,4 @@ try {
 }
 ?>
 --EXPECT--
-Argument 1 passed to sample\test() must be an instance of Exception, instance of stdClass given
+Argument 1 passed to sample\test() must be an instance of sample\SampleClass, instance of stdClass given

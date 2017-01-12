@@ -1,11 +1,11 @@
 --TEST--
-Call function with optional argument
+Call function with sample\SampleClass instance as argument
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php
-$e = new Exception('Test');
-sample\test($e);
+$o = new sample\SampleClass('Test');
+sample\test($o);
 ?>
 --EXPECT--
-Argument is an Exception.
+Argument is an sample\SampleClass.
