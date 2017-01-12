@@ -1,5 +1,5 @@
 --TEST--
-Call function with optional argument
+Call function with stdClass instance as argument expecting an error exception
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
