@@ -1,39 +1,34 @@
 #include "php_sample.h"
 
+#include <zend_exceptions.h>
+
 #define SAMPLE_NS "sample"
 
 /*
-  1. define the arguments *_EX allows to define the number of required arguments in the third parameter
+  1. define the argument class by name
 
   validate with 'php -re sample'
-
-  ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO(name, type, class_name, allow_null)
-  ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(name, return_reference, required_num_args, type, class_name, allow_null)
 */
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(ArgInfo_sample_multiply, 0, 1, IS_LONG, NULL, 0)
-    ZEND_ARG_TYPE_INFO(0, first, IS_LONG, 0)
-    ZEND_ARG_TYPE_INFO(0, second, IS_LONG, 0)
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_test, 0)
+    ZEND_ARG_OBJ_INFO(0, e, Exception, 0)
 ZEND_END_ARG_INFO()
 
-PHP_FUNCTION(sample_multiply)
+PHP_FUNCTION(sample_test)
 {
-  zend_long first;
-  zend_long second = 1;
+  zval *e;
 
-  ZEND_PARSE_PARAMETERS_START(1, 2)
-  	Z_PARAM_LONG(first)
-  	Z_PARAM_OPTIONAL
-  	Z_PARAM_LONG(second)
+  ZEND_PARSE_PARAMETERS_START(1, 1)
+    /*
+     2. Fetch the argument and provide the zend class entry for validation
+     */
+  	Z_PARAM_OBJECT_OF_CLASS(e, zend_ce_exception)
   ZEND_PARSE_PARAMETERS_END();
 
-  RETURN_LONG(first * second);
+  php_printf("Argument is an Exception.\n");
 }
 
 const zend_function_entry php_sample_functions[] = {
-  /*
-    2. provide the argument info in the function registration
-  */
-  ZEND_NS_NAMED_FE(SAMPLE_NS, multiply, ZEND_FN(sample_multiply), ArgInfo_sample_multiply)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, test, ZEND_FN(sample_test), ArgInfo_sample_test)
   PHP_FE_END
 };
 

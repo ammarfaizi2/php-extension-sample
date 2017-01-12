@@ -3,9 +3,9 @@ Call function with optional argument
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
-<?php 
-echo \sample\multiply(21), "\n", \sample\multiply(21, 2);
+<?php
+$e = new Exception('Test');
+sample\test($e);
 ?>
 --EXPECT--
-21
-42
+Argument is an Exception.
